@@ -40,7 +40,7 @@ Flags:
 
 Build and run a docker image using those commands:
 ```
-docker make
+make docker
 
 docker run \
 	-e "AWS_REGION=<aws_region>" \
