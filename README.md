@@ -2,6 +2,7 @@
 
 ![Build Status](https://img.shields.io/badge/build-passing-success)
 ![License](https://img.shields.io/badge/license-MIT-blue)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/dvdlevanon)](https://artifacthub.io/packages/search?repo=dvdlevanon)
 
 ## Table of Contents
 - [Overview](#overview)
