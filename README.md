@@ -1,51 +1,85 @@
+# AWS CloudWatch Logs Streamer
 
-# Brief
+![Build Status](https://img.shields.io/badge/build-passing-success)
+![License](https://img.shields.io/badge/license-MIT-blue)
 
-A small utility that read event logs from AWS Cloudwatch and write them to stdout.
+## Table of Contents
+- [Overview](#overview)
+- [Motivation](#motivation)
+- [Requirements](#requirements)
+- [Build](#build)
+- [Usage](#usage)
+- [Docker Support](#docker-support)
+- [Contributing](#contributing)
+- [License](#license)
 
-# Motivation
+## Overview
 
-Assuming you have a central location where all logs are stored, like Loki or Elastic. You want to be able to send Cloudwatch logs to the central location as well.
+AWS CloudWatch Logs Streamer is a utility that reads event logs from AWS CloudWatch and writes them to `stdout`. This utility is useful for integrating CloudWatch logs with centralized logging solutions like Loki, Elasticsearch, or any system that can collect logs from `stdout`.
 
-One of the ways to do so is using this tool which print the logs to stdout. And then logs collector like Promtail, Fluentd etc can collect and send the logs to the central location.
+## Motivation
 
-# Build
+In environments where logs are aggregated to a centralized location, such as Loki or Elastic, it can be essential to also stream AWS CloudWatch logs. This tool facilitates that integration by printing CloudWatch logs to `stdout`, making it easy for log collectors like Promtail and Fluentd to send those logs to your centralized logging system.
 
-`make build`
+## Requirements
 
-# Run
+- Make sure your AWS credentials and region are configured properly. For more information, see [AWS SDK Configuration Guide](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html).
 
-This tool uses AWS SDK for accessing Cloudwatch, you should configure your environment before running this tool. For more information see [how to specifying credentials and region](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html)
+## Build
 
-Once aws credentials and region configured, run the streamer with this command:
+To build the project, run:
 
-`./build/aws-cloudwatch-logs-streamer -g <cloudwatch group name>`
-
-Run with `--help` to get all command line flags and options
-
+```bash
+make build
 ```
+
+## Usage
+
+After AWS credentials and the region are configured, run the streamer with the following command:
+
+```bash
+./build/aws-cloudwatch-logs-streamer -g <cloudwatch-group-name>
+```
+
+For a full list of command-line flags and options:
+
+```bash
+aws-cloudwatch-logs-streamer --help
+```
+
+### Command-Line Flags
+```bash
 Usage:
   aws-cloudwatch-logs-streamer [flags]
 
 Flags:
-      --config string            config file (default is $HOME/.aws-cloudwatch-logs-streamer.yaml)
-  -g, --groupname string         Cloudwatch group name to stream from
-  -h, --help                     help for aws-cloudwatch-logs-streamer
+      --config string            Config file (default is $HOME/.aws-cloudwatch-logs-streamer.yaml)
+  -g, --groupname string         CloudWatch group name to stream from
+  -h, --help                     Help for aws-cloudwatch-logs-streamer
   -i, --interval int             Check for new events every X milliseconds (default 1000)
       --squash                   Remove new lines from the original log line
-  -s, --streamname stringArray   Cloudwatch stream name to stream from, can be specified multiple times - by default stream from all available streams
+  -s, --streamname stringArray   CloudWatch stream name to stream from (can be specified multiple times; streams from all available streams by default)
 ```
 
-# Docker
+## Docker Support
 
-Build and run a docker image using those commands:
-```
+To build and run the Docker image, use the following commands:
+
+```bash
 docker make
 
 docker run \
-	-e "AWS_REGION=<aws_region>" \
-	-e "AWS_ACCESS_KEY_ID=<aws_key>" \
-	-e "AWS_SECRET_ACCESS_KEY=<aws_secret>" \
-	-e "LOG_STREAMER_GROUPNAME=/aws/rds/instance/sightd-production/postgresql" \
-	-it aws-cloudwatch-logs-streamer:latest
+  -e "AWS_REGION=<aws_region>" \
+  -e "AWS_ACCESS_KEY_ID=<aws_key>" \
+  -e "AWS_SECRET_ACCESS_KEY=<aws_secret>" \
+  -e "LOG_STREAMER_GROUPNAME=/aws/rds/instance/sightd-production/postgresql" \
+  -it aws-cloudwatch-logs-streamer:latest
 ```
+
+## Contributing
+
+Feel free to submit pull requests or create issues to improve the project.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE.md file for details.
