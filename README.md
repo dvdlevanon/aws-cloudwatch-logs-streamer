@@ -66,7 +66,7 @@ Flags:
 To build and run the Docker image, use the following commands:
 
 ```bash
-docker make
+make docker
 
 docker run \
   -e "AWS_REGION=<aws_region>" \
